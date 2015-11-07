@@ -7,6 +7,7 @@
 	<string name="error_joiningTeamFailed">Joining team failed</string>
 	<string name="error_loginFailed">Login failed</string>
 	<string name="error_loadingGamesFailed">Loading games failed</string>
+	<string name="error_loadingTeamMembersFailed">Loading team members failed</string>
 	<string name="error_noGamesFound">No games found</string>
 	<string name="error_signUpFailed">Sign up failed</string>
 
