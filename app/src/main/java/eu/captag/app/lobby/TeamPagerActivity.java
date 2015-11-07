@@ -11,12 +11,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import junit.framework.Test;
+
 import java.text.DateFormat;
+import java.util.List;
 
 import eu.captag.R;
 import eu.captag.app.BaseActivity;
 import eu.captag.app.lobby.adapter.TeamPageAdapter;
 import eu.captag.model.Game;
+import eu.captag.model.Player;
 import eu.captag.model.Team;
 
 
@@ -57,12 +67,33 @@ public class TeamPagerActivity extends BaseActivity {
       super.onCreate(instanceState);
       setContentView(R.layout.activity_team_pager);
       // Initialize
-      intializeHeader();
+      initializeHeader();
       initializeViews();
    }
 
 
    // endregion
+
+
+   private void onLeaveGameClicked () {
+
+      Game game = getGame();
+      ParseUser user = ParseUser.getCurrentUser();
+
+      ParseQuery<Player> playerQuery = ParseQuery.getQuery(Player.class);
+      playerQuery.whereEqualTo(Player.RELATION_USER, user);
+      playerQuery.whereEqualTo(Player.RELATION_GAME, game);
+
+      playerQuery.getFirstInBackground(new GetCallback<Player>() {
+         @Override
+         public void done (Player player, ParseException e) {
+            if (player != null) {
+               player.deleteInBackground();
+               GameSelectionActivity.start(TeamPagerActivity.this);
+            }
+         }
+      });
+   }
 
 
    public Game getGame () {
@@ -92,7 +123,7 @@ public class TeamPagerActivity extends BaseActivity {
    // region Views
 
 
-   private void intializeHeader () {
+   private void initializeHeader () {
 
       Game game = getGame();
 
@@ -107,7 +138,7 @@ public class TeamPagerActivity extends BaseActivity {
       leaveGameButton.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick (View v) {
-            //onLeaveGameClicked();
+            onLeaveGameClicked();
          }
       });
    }
