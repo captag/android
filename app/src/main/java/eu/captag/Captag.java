@@ -4,6 +4,7 @@ package eu.captag;
 import android.app.Application;
 
 import com.parse.Parse;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 
 import eu.captag.model.Game;
@@ -27,7 +28,9 @@ public class Captag extends Application {
 
       super.onCreate();
       // Initialize parse
-      Parse.initialize(this, APPLICATION_ID,CLIENT_KEY);
+      Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
+      ParseInstallation.getCurrentInstallation().saveInBackground();
+
       ParseObject.registerSubclass(Game.class);
       ParseObject.registerSubclass(Player.class);
       ParseObject.registerSubclass(Team.class);
