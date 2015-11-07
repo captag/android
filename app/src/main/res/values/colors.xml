@@ -10,5 +10,7 @@
 	<!-- material design divider color-->
 	<color name="divider">#1FFFFFFF</color>
 
+	<color name="black">#000000</color>
 	<color name="white">#FFFFFF</color>
+
 </resources>

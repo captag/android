@@ -1,6 +1,7 @@
 package eu.captag.model;
 
 
+import com.parse.GetCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -53,6 +54,14 @@ public class Player extends ParseObject {
       } catch (ParseException e) {
          return null;
       }
+   }
+
+
+   public void getUserInBackground (GetCallback<ParseUser> getCallback) {
+
+      ParseRelation<ParseUser> userRelation = getRelation(RELATION_USER);
+      ParseQuery<ParseUser> userQuery = userRelation.getQuery();
+      userQuery.getFirstInBackground(getCallback);
    }
 
 
