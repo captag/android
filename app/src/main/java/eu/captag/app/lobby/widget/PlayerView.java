@@ -7,13 +7,15 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+
 import eu.captag.R;
 import eu.captag.model.Player;
-import eu.captag.model.Team;
 
 
 /**
@@ -117,8 +119,18 @@ public class PlayerView extends LinearLayout {
       }
 
       // region Update the username text view
-      String username = player.getUser().getUsername();
-      usernameView.setText(username);
+      player.getUserInBackground(new GetCallback<ParseUser>() {
+         @Override
+         public void done (ParseUser user, ParseException e) {
+            if (user != null) {
+               String username = user.getUsername();
+               usernameView.setText(username);
+            } else {
+               usernameView.setText("WTF");
+            }
+         }
+      });
+
       // endregion
    }
 
