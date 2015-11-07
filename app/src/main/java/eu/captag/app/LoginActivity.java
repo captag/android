@@ -50,6 +50,8 @@ public class LoginActivity extends BaseActivity {
          public void done (ParseUser user, ParseException e) {
             if (user != null) {
                GameSelectionActivity.start(LoginActivity.this);
+               // Finish this activity to prevent the user from navigating back
+               finish();
             } else {
                // Hide the login button
                final FloatingActionButton loginButton = getView(R.id.floatingActionButton_login);

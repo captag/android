@@ -70,6 +70,8 @@ public class JoinTeamActivity extends BaseActivity implements TeamAdapter.Intera
          public void done (ParseException e) {
             if (e == null) {
                TeamPagerActivity.start(JoinTeamActivity.this, getGame());
+               // Finish this activity to prevent the user from navigating back
+               finish();
             } else {
                String message = getString(R.string.error_joiningTeamFailed);
                showErrorSnackbar(message, Snackbar.LENGTH_LONG);
