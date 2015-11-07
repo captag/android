@@ -8,6 +8,7 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.captag.app.lobby.TeamMembersFragment;
 import eu.captag.model.Team;
 
 
@@ -15,20 +16,25 @@ import eu.captag.model.Team;
  * TODO Write documentation
  * @author Ulrich Raab
  */
-public class TeamPagerAdapter extends FragmentStatePagerAdapter {
+public class TeamPageAdapter extends FragmentStatePagerAdapter {
 
 
    private List<Team> teams;
 
 
-   public TeamPagerAdapter (FragmentManager fragmentManager) {
+   public TeamPageAdapter (FragmentManager fragmentManager) {
       super(fragmentManager);
    }
 
 
    @Override
    public Fragment getItem (int position) {
-      return null;
+
+      Team team = getTeam(position);
+      // Create the fragment
+      TeamMembersFragment fragment = new TeamMembersFragment();
+      fragment.setTeam(team);
+      return fragment;
    }
 
 

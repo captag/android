@@ -16,6 +16,7 @@ import java.util.List;
 import eu.captag.R;
 import eu.captag.app.BaseActivity;
 import eu.captag.app.lobby.adapter.TeamAdapter;
+import eu.captag.app.lobby.adapter.TeamPageAdapter;
 import eu.captag.model.Game;
 import eu.captag.model.Player;
 import eu.captag.model.Team;
@@ -68,7 +69,7 @@ public class JoinTeamActivity extends BaseActivity implements TeamAdapter.Intera
          @Override
          public void done (ParseException e) {
             if (e == null) {
-               // Player created
+               TeamPagerActivity.start(JoinTeamActivity.this, getGame());
             } else {
                String message = getString(R.string.error_joiningTeamFailed);
                showErrorSnackbar(message, Snackbar.LENGTH_LONG);

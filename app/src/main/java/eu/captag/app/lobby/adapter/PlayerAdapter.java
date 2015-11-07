@@ -23,19 +23,23 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
 
    @Override
    public ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
-      return null;
+
+      PlayerView playerView = PlayerView.inflate(parent, false);
+      return new ViewHolder(playerView);
    }
 
 
    @Override
-   public void onBindViewHolder (ViewHolder holder, int position) {
+   public void onBindViewHolder (ViewHolder viewHolder, int position) {
 
+      Player player = getPlayer(position);
+      viewHolder.playerView.bind(player);
    }
 
 
    @Override
    public int getItemCount () {
-      return 0;
+      return getPlayers().size();
    }
 
 
