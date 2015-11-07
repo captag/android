@@ -33,10 +33,15 @@ public class LoginActivity extends BaseActivity {
    protected void onCreate (Bundle savedInstanceState) {
 
       super.onCreate(savedInstanceState);
-      setContentView(R.layout.activity_login);
 
-      // Initialization
-      initializeViews();
+      // Check if the user is already logged in and skip the login process if true
+      ParseUser user = ParseUser.getCurrentUser();
+      if (user != null) {
+         startGameSelectionActivity();
+      } else {
+         setContentView(R.layout.activity_login);
+         initializeViews();
+      }
    }
 
 
@@ -49,9 +54,7 @@ public class LoginActivity extends BaseActivity {
          @Override
          public void done (ParseUser user, ParseException e) {
             if (user != null) {
-               GameSelectionActivity.start(LoginActivity.this);
-               // Finish this activity to prevent the user from navigating back
-               finish();
+               startGameSelectionActivity();
             } else {
                // Hide the login button
                final FloatingActionButton loginButton = getView(R.id.floatingActionButton_login);
@@ -81,6 +84,14 @@ public class LoginActivity extends BaseActivity {
 
    private void onSignUpClicked () {
       SignUpActivity.start(this);
+   }
+
+
+   private void startGameSelectionActivity () {
+
+      GameSelectionActivity.start(LoginActivity.this);
+      // Finish this activity to prevent the user from navigating back
+      finish();
    }
 
 
