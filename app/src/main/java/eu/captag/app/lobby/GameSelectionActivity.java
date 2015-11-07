@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ import eu.captag.R;
 import eu.captag.app.BaseActivity;
 import eu.captag.app.lobby.adapter.GameAdapter;
 import eu.captag.model.Game;
+import eu.captag.model.Player;
+import eu.captag.model.Team;
 import eu.captag.util.DividerItemDecoration;
 
 
@@ -53,6 +56,14 @@ public class GameSelectionActivity extends BaseActivity implements GameAdapter.I
 
    @Override
    public void onJoinGameClicked (Game game) {
+      for(Team team : game.getTeams()) {
+         for(Player player : team.getTeamMembers()) {
+            if(player.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+               TeamPagerActivity.start(this, game);
+                return;
+            }
+         }
+      }
       JoinTeamActivity.start(this, game);
    }
 
