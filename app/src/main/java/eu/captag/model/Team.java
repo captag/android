@@ -3,6 +3,7 @@ package eu.captag.model;
 
 import android.graphics.Color;
 
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -75,6 +76,14 @@ public class Team extends ParseObject {
       } catch (ParseException e) {
          return new ArrayList<>();
       }
+   }
+
+
+   public void getTeamMembersInBackground (FindCallback<Player> callback) {
+
+      ParseQuery<Player> playerQuery = ParseQuery.getQuery(Player.class);
+      playerQuery.whereEqualTo(Player.RELATION_TEAM, this);
+      playerQuery.findInBackground(callback);
    }
 
 

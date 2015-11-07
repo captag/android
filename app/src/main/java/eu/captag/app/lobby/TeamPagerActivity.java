@@ -92,7 +92,6 @@ public class TeamPagerActivity extends BaseActivity {
 
       // Initialize the view pager and tab layout
       TabLayout tabLayout = getView(R.id.tabLayout);
-      tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
       for (Team team : teamPageAdapter.getTeams()) {
          TabLayout.Tab tab = tabLayout.newTab();
          tab.setText(team.getName());
