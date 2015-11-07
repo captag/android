@@ -1,6 +1,7 @@
 package eu.captag.model;
 
 
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -24,6 +25,8 @@ public class Game extends ParseObject {
    public static final String ATTRIBUTE_NAME = "name";
    public static final String ATTRIBUTE_START_DATE = "startAt";
 
+   public static final String RELATION_TAGS = "tags";
+
 
    // endregion
 
@@ -35,6 +38,26 @@ public class Game extends ParseObject {
 
    public Date getStartDate () {
       return getDate(ATTRIBUTE_START_DATE);
+   }
+
+
+   public List<Tag> getTags () {
+
+      ParseQuery<Tag> tagQuery = ParseQuery.getQuery(Tag.class);
+      tagQuery.whereEqualTo(Tag.RELATION_GAME, this);
+      try {
+         return tagQuery.find();
+      } catch (ParseException e) {
+         return null;
+      }
+   }
+
+
+   public void getTagsInBackground (FindCallback<Tag> findCallback) {
+
+      ParseQuery<Tag> tagQuery = ParseQuery.getQuery(Tag.class);
+      tagQuery.whereEqualTo(Tag.RELATION_GAME, this);
+      tagQuery.findInBackground(findCallback);
    }
 
 

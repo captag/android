@@ -9,6 +9,7 @@ import com.parse.ParseObject;
 
 import eu.captag.model.Game;
 import eu.captag.model.Player;
+import eu.captag.model.Tag;
 import eu.captag.model.Team;
 
 
@@ -33,6 +34,7 @@ public class Captag extends Application {
 
       ParseObject.registerSubclass(Game.class);
       ParseObject.registerSubclass(Player.class);
+      ParseObject.registerSubclass(Tag.class);
       ParseObject.registerSubclass(Team.class);
    }
 }

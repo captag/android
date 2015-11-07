@@ -6,11 +6,13 @@
 
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 	<uses-permission android:name="android.permission.WAKE_LOCK"/>
 	<uses-permission android:name="android.permission.VIBRATE"/>
 	<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
 
 	<!--
@@ -30,6 +32,13 @@
 		android:supportsRtl="true"
 		android:theme="@style/Theme.Captag"
 		tools:ignore="AllowBackup">
+
+		<meta-data
+			android:name="com.google.android.gms.version"
+			android:value="@integer/google_play_services_version" />
+		<meta-data
+			android:name="com.google.android.maps.v2.API_KEY"
+			android:value="AIzaSyDDRfrXVPXJBBuchYBJk0QodkNsU_j4hL4"/>
 
 		<activity
 			android:name=".app.LoginActivity"
@@ -58,6 +67,10 @@
 			android:name=".app.lobby.TeamPagerActivity"
 			android:screenOrientation="portrait"/>
 
+		<activity
+			android:name=".app.game.GameMapActivity"
+			android:screenOrientation="portrait"/>
+
 		<service android:name="com.parse.PushService"/>
 
 		<receiver
@@ -69,6 +82,7 @@
 				<action android:name="com.parse.push.intent.OPEN"/>
 			</intent-filter>
 		</receiver>
+
 		<receiver
 			android:name="com.parse.GcmBroadcastReceiver"
 			android:permission="com.google.android.c2dm.permission.SEND">
@@ -79,7 +93,9 @@
 				<category android:name="eu.captag"/>
 			</intent-filter>
 		</receiver>
+
         <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_notification"/>
+
 	</application>
 
 </manifest>

@@ -4,6 +4,7 @@ package eu.captag.model;
 import com.parse.GetCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
@@ -21,7 +22,7 @@ public class Player extends ParseObject {
    // region Constants
 
 
-   public static final String ATTRIBUTE_POSITION = "position";
+   public static final String ATTRIBUTE_GEO_POINT = "geoPoint";
 
    public static final String RELATION_GAME = "game";
    public static final String RELATION_TEAM = "team";
@@ -29,6 +30,16 @@ public class Player extends ParseObject {
 
 
    // endregion
+
+
+   public ParseGeoPoint getGeoPoint () {
+      return getParseGeoPoint(ATTRIBUTE_GEO_POINT);
+   }
+
+
+   public void setGeoPoint (ParseGeoPoint geoPoint) {
+      put(ATTRIBUTE_GEO_POINT, geoPoint);
+   }
 
 
    public void setGame (Game game) {
