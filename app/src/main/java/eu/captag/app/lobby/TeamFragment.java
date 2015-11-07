@@ -28,7 +28,7 @@ import eu.captag.util.DividerItemDecoration;
  * TODO Write documentation
  * @author Ulrich Raab
  */
-public class TeamMembersFragment extends BaseFragment {
+public class TeamFragment extends BaseFragment {
 
 
    private Team team;
@@ -40,7 +40,7 @@ public class TeamMembersFragment extends BaseFragment {
 
    @Override
    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle inState) {
-      return inflater.inflate(R.layout.fragment_team_members, container, false);
+      return inflater.inflate(R.layout.fragment_team, container, false);
    }
 
 
