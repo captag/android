@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/coordinatorLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<include layout="@layout/widget_app_bar"/>
+
+	<android.support.v4.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:orientation="vertical">
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/textInputLayout_username"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="16dp"
+				android:paddingTop="16dp"
+				android:paddingRight="16dp"
+				android:paddingBottom="8dp"
+				app:errorTextAppearance="?attr/errorTextAppearance">
+
+				<EditText
+					android:id="@+id/editText_username"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/hint_username"
+					android:inputType="textFilter"
+					android:nextFocusDown="@+id/editText_email"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/textInputLayout_email"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="16dp"
+				android:paddingTop="8dp"
+				android:paddingRight="16dp"
+				android:paddingBottom="8dp"
+				app:errorTextAppearance="?attr/errorTextAppearance">
+
+				<EditText
+					android:id="@+id/editText_email"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/hint_email"
+					android:inputType="textEmailAddress"
+					android:nextFocusDown="@+id/editText_password"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/textInputLayout_password"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="16dp"
+				android:paddingTop="8dp"
+				android:paddingRight="16dp"
+				android:paddingBottom="16dp"
+				app:errorTextAppearance="?attr/errorTextAppearance">
+
+				<EditText
+					android:id="@+id/editText_password"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/hint_password"
+					android:inputType="textPassword"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+		</LinearLayout>
+
+	</android.support.v4.widget.NestedScrollView>
+
+	<android.support.design.widget.FloatingActionButton
+		android:id="@+id/floatingActionButton_signUp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom|end"
+		android:layout_margin="16dp"
+		android:src="@mipmap/ic_done_white_24dp"/>
+
+	<Button
+		android:id="@+id/button_login"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom|end"
+		android:layout_marginLeft="16dp"
+		android:layout_marginTop="20dp"
+		android:layout_marginRight="80dp"
+		android:layout_marginBottom="20dp"
+		android:background="?attr/selectableItemBackground"
+		android:text="@string/title_button_login"/>
+
+</android.support.design.widget.CoordinatorLayout>

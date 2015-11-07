@@ -1,0 +1,30 @@
+<resources>
+
+	<!-- Base application theme. -->
+	<style name="Theme.Captag" parent="Theme.AppCompat">
+
+		<!-- Customize your theme here. -->
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
+
+	</style>
+
+	<style name="Theme.Captag.Button.Accent" parent="Widget.AppCompat.Button">
+		<item name="colorButtonNormal">@color/colorAccent</item>
+	</style>
+
+	<style name="Theme.Captag.Button.Primary" parent="Widget.AppCompat.Button">
+		<item name="colorButtonNormal">@color/colorPrimary</item>
+	</style>
+
+	<style name="Theme.Captag.TextAppearance.ListItem.Primary" parent="TextAppearance.AppCompat.Subhead">
+		<item name="android:textSize">20sp</item>
+	</style>
+
+	<style name="Theme.Captag.TextAppearance.ListItem.Secondary" parent="TextAppearance.AppCompat.Body1">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">?android:attr/textColorSecondary</item>
+	</style>
+
+</resources>
