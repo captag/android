@@ -23,6 +23,7 @@
 	<!-- titles -->
 	<string name="title_button_joinGame">Join</string>
 	<string name="title_button_joinTeam">Join</string>
+	<string name="title_button_leaveGame">Leave</string>
 	<string name="title_button_login">Login</string>
 	<string name="title_button_signUp">Sign up</string>
 

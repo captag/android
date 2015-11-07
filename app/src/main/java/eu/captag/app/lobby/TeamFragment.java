@@ -9,16 +9,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
+import java.text.DateFormat;
 import java.util.List;
 
 import eu.captag.R;
 import eu.captag.app.BaseActivity;
 import eu.captag.app.BaseFragment;
 import eu.captag.app.lobby.adapter.PlayerAdapter;
+import eu.captag.model.Game;
 import eu.captag.model.Player;
 import eu.captag.model.Team;
 import eu.captag.util.DividerItemDecoration;
@@ -54,6 +58,11 @@ public class TeamFragment extends BaseFragment {
 
 
    // endregion
+
+
+   private void onLeaveGameClicked () {
+
+   }
 
 
    public Team getTeam () {

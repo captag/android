@@ -6,40 +6,69 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<android.support.design.widget.AppBarLayout
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/appBarLayout"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+	<include layout="@layout/widget_app_bar"/>
 
-		<android.support.v7.widget.Toolbar
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?attr/colorPrimary">
+			android:orientation="horizontal"
+			android:padding="16dp"
+			android:background="@color/black">
 
-			<ImageView
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:orientation="vertical">
+
+				<TextView
+					android:id="@+id/textView_gameName"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textAppearance="@style/Theme.Captag.TextAppearance.ListItem.Primary"/>
+				<TextView
+					android:id="@+id/textView_gameStartDate"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textAppearance="@style/Theme.Captag.TextAppearance.ListItem.Secondary"/>
+
+			</LinearLayout>
+
+			<Button
+				android:id="@+id/button_leaveGame"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:contentDescription="@null"
-				android:src="@mipmap/ic_app_bar_logo"/>
+				android:layout_gravity="center_vertical"
+				android:text="@string/title_button_leaveGame"
+				android:theme="@style/Theme.Captag.Button.Accent"/>
 
-		</android.support.v7.widget.Toolbar>
+		</LinearLayout>
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/divider"/>
 
 		<android.support.design.widget.TabLayout
 			android:id="@+id/tabLayout"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:minHeight="?android:attr/actionBarSize"
+			android:background="@color/black"
 			app:tabMode="scrollable"/>
 
-	</android.support.design.widget.AppBarLayout>
+		<android.support.v4.view.ViewPager
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/viewPager"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"/>
 
-	<android.support.v4.view.ViewPager
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/viewPager"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+	</LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

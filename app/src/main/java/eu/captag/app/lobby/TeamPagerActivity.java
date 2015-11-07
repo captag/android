@@ -7,6 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import java.text.DateFormat;
 
 import eu.captag.R;
 import eu.captag.app.BaseActivity;
@@ -51,7 +56,8 @@ public class TeamPagerActivity extends BaseActivity {
 
       super.onCreate(instanceState);
       setContentView(R.layout.activity_team_pager);
-      // Initialize the team pager
+      // Initialize
+      intializeHeader();
       initializeViews();
    }
 
@@ -84,6 +90,27 @@ public class TeamPagerActivity extends BaseActivity {
 
 
    // region Views
+
+
+   private void intializeHeader () {
+
+      Game game = getGame();
+
+      TextView gameNameView = getView(R.id.textView_gameName);
+      gameNameView.setText(game.getName());
+
+      DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
+      TextView gameStartDateView = getView(R.id.textView_gameStartDate);
+      gameStartDateView.setText(dateFormat.format(game.getStartDate()));
+
+      Button leaveGameButton = getView(R.id.button_leaveGame);
+      leaveGameButton.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick (View v) {
+            //onLeaveGameClicked();
+         }
+      });
+   }
 
 
    private void initializeViews () {
