@@ -57,6 +57,7 @@ public class GameSelectionActivity extends BaseActivity implements GameAdapter.I
 
    @Override
    public void onJoinGameClicked (Game game) {
+
       for (Team team : game.getTeams()) {
          for (Player player : team.getTeamMembers()) {
             if (isCurrentUser(player)) {
@@ -65,7 +66,15 @@ public class GameSelectionActivity extends BaseActivity implements GameAdapter.I
             }
          }
       }
-      JoinTeamActivity.start(this, game);
+
+      if (Game.STATUS_STARTED.equals(game.getStatus())) {
+
+         String message = getString(R.string.message_gameAlreadyStarted);
+         showSnackbar(message, Snackbar.LENGTH_LONG);
+
+      } else {
+         JoinTeamActivity.start(this, game);
+      }
    }
 
 
@@ -132,7 +141,6 @@ public class GameSelectionActivity extends BaseActivity implements GameAdapter.I
 
       ParseQuery<Game> query = ParseQuery.getQuery(Game.class);
       query.whereNotEqualTo(Game.ATTRIBUTE_STATUS, Game.STATUS_FINISHED);
-      query.whereNotEqualTo(Game.ATTRIBUTE_STATUS, Game.STATUS_STARTED);
       query.findInBackground(findCallback);
    }
 

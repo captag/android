@@ -7,8 +7,11 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 
@@ -39,6 +42,7 @@ public class GameView extends LinearLayout {
 
 
    private Game game;
+   private ImageView iconView;
    private InteractionListener interactionListener;
    private TextView subtitleView;
    private TextView titleView;
@@ -98,6 +102,7 @@ public class GameView extends LinearLayout {
          }
       });
 
+      iconView = getView(R.id.imageView_icon);
       subtitleView = getView(R.id.textView_subtitle);
       titleView = getView(R.id.textView_title);
    }
@@ -138,6 +143,12 @@ public class GameView extends LinearLayout {
          String message = "game must be not null";
          throw new IllegalStateException(message);
       }
+
+      Picasso.with(getContext())
+            .load(game.getIcon())
+            .placeholder(R.mipmap.ic_game_icon_placeholder_black_40dp)
+            .error(R.mipmap.ic_game_icon_placeholder_black_40dp)
+            .into(iconView);
 
       // region Update the subtitle text view
       DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);

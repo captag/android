@@ -39,4 +39,5 @@ dependencies {
     compile 'com.parse:parse-android:1.10.3'
     compile 'com.journeyapps:zxing-android-embedded:3.0.3@aar'
     compile 'com.google.zxing:core:3.2.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

@@ -23,6 +23,7 @@ public class Game extends ParseObject {
    // region Constants
 
 
+   public static final String ATTRIBUTE_ICON = "icon";
    public static final String ATTRIBUTE_NAME = "name";
    public static final String ATTRIBUTE_START_DATE = "startAt";
    public static final String ATTRIBUTE_STATUS = "status";
@@ -34,6 +35,11 @@ public class Game extends ParseObject {
 
 
    // endregion
+
+
+   public String getIcon () {
+      return getString(ATTRIBUTE_ICON);
+   }
 
 
    public String getName () {
