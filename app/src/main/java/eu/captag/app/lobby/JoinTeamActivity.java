@@ -9,9 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.parse.ParseException;
-import com.parse.ParseInstallation;
 import com.parse.ParsePush;
-import com.parse.PushService;
 import com.parse.SaveCallback;
 
 import java.util.List;
@@ -62,14 +60,15 @@ public class JoinTeamActivity extends BaseActivity implements TeamAdapter.Intera
    @Override
    public void onJoinTeamClicked (Team team) {
 
-      Player player = new Player();
-      player.setGame(getGame());
-      player.setTeam(team);
-      player.setUser(getUser());
-
       // Subscript for notification
       Game game = getGame();
       ParsePush.subscribeInBackground(game.getObjectId());
+
+      // Create a new player
+      Player player = new Player();
+      player.setGame(game);
+      player.setTeam(team);
+      player.setUser(getUser());
 
       SaveCallback saveCallback = new SaveCallback() {
          @Override
@@ -84,7 +83,6 @@ public class JoinTeamActivity extends BaseActivity implements TeamAdapter.Intera
             }
          }
       };
-
       player.saveInBackground(saveCallback);
    }
 
