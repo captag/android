@@ -14,6 +14,7 @@
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+	<uses-permission android:name="android.permission.CAMERA"/>
 
 	<!--
       IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
@@ -69,6 +70,10 @@
 
 		<activity
 			android:name=".app.game.GameMapActivity"
+			android:screenOrientation="portrait"/>
+
+		<activity
+			android:name=".app.game.QrCodeScannerActivity"
 			android:screenOrientation="portrait"/>
 
 		<service android:name="com.parse.PushService"/>

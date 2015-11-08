@@ -14,6 +14,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,14 +29,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
+import com.parse.FunctionCallback;
 import com.parse.GetCallback;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import eu.captag.R;
 import eu.captag.app.BaseActivity;
@@ -55,6 +64,7 @@ public class GameMapActivity extends BaseActivity implements OnMapReadyCallback,
 
    private static final LatLng GERMANY = new LatLng(51.099442, 10.371321);
    private static final int ZOOM = 5;
+   private static final int REQUEST_CODE_SCAN_QR_CODE = 1572;
 
 
    // endregion
@@ -100,10 +110,29 @@ public class GameMapActivity extends BaseActivity implements OnMapReadyCallback,
 
       super.onCreate(instanceState);
       setContentView(R.layout.activity_game_map);
+      // Hide the scan tag fab
+      // hideScanTagButton();
       // Retrieve the player
       retrievePlayer();
-      // Initialize the map view
+      // Initialize
       initializeMapView(instanceState);
+      initializeScanTagButton();
+   }
+
+
+   @Override
+   protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+
+      if (REQUEST_CODE_SCAN_QR_CODE == requestCode) {
+         // Check if the request was successful, do nothing if not
+         if (resultCode == RESULT_OK) {
+            String tagId = data.getStringExtra("SCAN_RESULT");
+            captureTag(tagId);
+         }
+
+      } else {
+         super.onActivityResult(requestCode, resultCode, data);
+      }
    }
 
 
@@ -228,6 +257,11 @@ public class GameMapActivity extends BaseActivity implements OnMapReadyCallback,
    // endregion
 
 
+   private void onScanTagClicked () {
+      QrCodeScannerActivity.startForResult(this, REQUEST_CODE_SCAN_QR_CODE);
+   }
+
+
    private Game getGame () {
 
       Game game = GameHolder.INSTANCE.game;
@@ -310,6 +344,18 @@ public class GameMapActivity extends BaseActivity implements OnMapReadyCallback,
    }
 
 
+   private void initializeScanTagButton () {
+
+      FloatingActionButton button = getView(R.id.floatingActionButton_scanTag);
+      button.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick (View v) {
+            onScanTagClicked();
+         }
+      });
+   }
+
+
    private void updateOwnMarker (LatLng coordinate) {
 
       GoogleMap googleMap = getGoogleMap();
@@ -383,6 +429,50 @@ public class GameMapActivity extends BaseActivity implements OnMapReadyCallback,
 
       GoogleMap googleMap = getGoogleMap();
       googleMap.moveCamera(CameraUpdateFactory.newLatLng(coordinate));
+   }
+
+
+   private void hideScanTagButton () {
+
+      FloatingActionButton button = getView(R.id.floatingActionButton_scanTag);
+      button.hide();
+   }
+
+
+   private void showScanTagButton () {
+
+      FloatingActionButton button = getView(R.id.floatingActionButton_scanTag);
+      button.show();
+   }
+
+
+   // endregion
+   // region Communication with Captag Api
+
+
+   private void captureTag (String tagId) {
+
+      Game game = getGame();
+      Player player = getPlayer();
+      Team team = player.getTeam();
+
+      Map<String, String> payload = new HashMap<>();
+      payload.put("gameId", game.getObjectId());
+      payload.put("playerId", player.getObjectId());
+      payload.put("tagId", tagId);
+      payload.put("teamId", team.getObjectId());
+
+      FunctionCallback<JSONObject> functionCallback = new FunctionCallback<JSONObject>() {
+         @Override
+         public void done (JSONObject responseBody, ParseException e) {
+            if (e == null) {
+               Toast.makeText(GameMapActivity.this, "No error", Toast.LENGTH_SHORT).show();
+            } else {
+               Toast.makeText(GameMapActivity.this, "Error " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+         }
+      };
+      ParseCloud.callFunctionInBackground("capture", payload, functionCallback);
    }
 
 

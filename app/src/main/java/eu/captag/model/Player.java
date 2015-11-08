@@ -48,20 +48,31 @@ public class Player extends ParseObject {
       gameRelation.add(game);
    }
 
+   public Team getTeam () {
+
+      ParseRelation<Team> relation = getRelation(RELATION_TEAM);
+      ParseQuery<Team> query = relation.getQuery();
+      try {
+         return query.getFirst();
+      } catch (ParseException e) {
+         return null;
+      }
+   }
+
 
    public void setTeam (Team team) {
 
-      ParseRelation<Team> teamRelation = getRelation(RELATION_TEAM);
-      teamRelation.add(team);
+      ParseRelation<Team> relation = getRelation(RELATION_TEAM);
+      relation.add(team);
    }
 
 
    public ParseUser getUser () {
 
-      ParseRelation<ParseUser> userRelation = getRelation(RELATION_USER);
-      ParseQuery<ParseUser> userQuery = userRelation.getQuery();
+      ParseRelation<ParseUser> relation = getRelation(RELATION_USER);
+      ParseQuery<ParseUser> query = relation.getQuery();
       try {
-         return userQuery.getFirst();
+         return query.getFirst();
       } catch (ParseException e) {
          return null;
       }
@@ -70,15 +81,15 @@ public class Player extends ParseObject {
 
    public void getUserInBackground (GetCallback<ParseUser> getCallback) {
 
-      ParseRelation<ParseUser> userRelation = getRelation(RELATION_USER);
-      ParseQuery<ParseUser> userQuery = userRelation.getQuery();
-      userQuery.getFirstInBackground(getCallback);
+      ParseRelation<ParseUser> relation = getRelation(RELATION_USER);
+      ParseQuery<ParseUser> query = relation.getQuery();
+      query.getFirstInBackground(getCallback);
    }
 
 
    public void setUser (ParseUser user) {
 
-      ParseRelation<ParseUser> userRelation = getRelation(RELATION_USER);
-      userRelation.add(user);
+      ParseRelation<ParseUser> relation = getRelation(RELATION_USER);
+      relation.add(user);
    }
 }
