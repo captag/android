@@ -11,16 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import junit.framework.Test;
-
 import java.text.DateFormat;
-import java.util.List;
 
 import eu.captag.R;
 import eu.captag.app.BaseActivity;
@@ -81,8 +77,8 @@ public class TeamPagerActivity extends BaseActivity {
       ParseUser user = ParseUser.getCurrentUser();
 
       ParseQuery<Player> playerQuery = ParseQuery.getQuery(Player.class);
-      playerQuery.whereEqualTo(Player.RELATION_USER, user);
-      playerQuery.whereEqualTo(Player.RELATION_GAME, game);
+      playerQuery.whereEqualTo(Player.POINTER_USER, user);
+      playerQuery.whereEqualTo(Player.POINTER_GAME, game);
 
       playerQuery.getFirstInBackground(new GetCallback<Player>() {
          @Override

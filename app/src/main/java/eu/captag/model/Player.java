@@ -1,13 +1,9 @@
 package eu.captag.model;
 
 
-import com.parse.GetCallback;
 import com.parse.ParseClassName;
-import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 
@@ -24,9 +20,9 @@ public class Player extends ParseObject {
 
    public static final String ATTRIBUTE_GEO_POINT = "geoPoint";
 
-   public static final String RELATION_GAME = "game";
-   public static final String RELATION_TEAM = "team";
-   public static final String RELATION_USER = "user";
+   public static final String POINTER_GAME = "game";
+   public static final String POINTER_TEAM = "team";
+   public static final String POINTER_USER = "user";
 
 
    // endregion
@@ -43,47 +39,32 @@ public class Player extends ParseObject {
 
 
    public void setGame (Game game) {
-        this.put("game",game);
+      this.put("game", game);
    }
 
-   public Team getTeam () {
 
-      ParseRelation<Team> relation = getRelation(RELATION_TEAM);
-      ParseQuery<Team> query = relation.getQuery();
-      try {
-         return query.getFirst();
-      } catch (ParseException e) {
-         return null;
-      }
+   public Team getTeam () {
+      return getPointer(POINTER_TEAM);
    }
 
 
    public void setTeam (Team team) {
-        this.put("team",team);
+      this.put("team", team);
    }
 
 
    public ParseUser getUser () {
-
-      ParseRelation<ParseUser> relation = getRelation(RELATION_USER);
-      ParseQuery<ParseUser> query = relation.getQuery();
-      try {
-         return query.getFirst();
-      } catch (ParseException e) {
-         return null;
-      }
-   }
-
-
-   public void getUserInBackground (GetCallback<ParseUser> getCallback) {
-
-      ParseRelation<ParseUser> relation = getRelation(RELATION_USER);
-      ParseQuery<ParseUser> query = relation.getQuery();
-      query.getFirstInBackground(getCallback);
+      return getPointer(POINTER_USER);
    }
 
 
    public void setUser (ParseUser user) {
-        this.put("user", user);
+      this.put("user", user);
+   }
+
+
+   private <T> T getPointer (String pointer) {
+      //noinspection unchecked
+      return (T) get(pointer);
    }
 }

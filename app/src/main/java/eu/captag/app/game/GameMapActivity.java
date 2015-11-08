@@ -285,8 +285,8 @@ public class GameMapActivity extends BaseActivity implements OnMapReadyCallback,
       ParseUser user = ParseUser.getCurrentUser();
 
       ParseQuery<Player> playerQuery = ParseQuery.getQuery(Player.class);
-      playerQuery.whereEqualTo(Player.RELATION_USER, user);
-      playerQuery.whereEqualTo(Player.RELATION_GAME, game);
+      playerQuery.whereEqualTo(Player.POINTER_USER, user);
+      playerQuery.whereEqualTo(Player.POINTER_GAME, game);
 
       playerQuery.getFirstInBackground(new GetCallback<Player>() {
          @Override

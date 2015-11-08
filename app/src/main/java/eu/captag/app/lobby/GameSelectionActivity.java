@@ -57,11 +57,11 @@ public class GameSelectionActivity extends BaseActivity implements GameAdapter.I
 
    @Override
    public void onJoinGameClicked (Game game) {
-      for(Team team : game.getTeams()) {
-         for(Player player : team.getTeamMembers()) {
-            if(player.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+      for (Team team : game.getTeams()) {
+         for (Player player : team.getTeamMembers()) {
+            if (player.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                TeamPagerActivity.start(this, game);
-                return;
+               return;
             }
          }
       }

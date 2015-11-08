@@ -8,7 +8,6 @@ import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseRelation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,7 @@ public class Team extends ParseObject {
    public static final String ATTRIBUTE_MAX_TEAM_MEMBERS = "maxTeamMembers";
    public static final String ATTRIBUTE_NAME = "name";
 
-   public static final String RELATION_GAME = "game";
+   public static final String POINTER_GAME = "game";
 
 
    // endregion
@@ -43,17 +42,7 @@ public class Team extends ParseObject {
 
 
    public Game getGame () {
-
-      ParseRelation<Game> gameRelation = getRelation(RELATION_GAME);
-      try {
-
-         // Query the related game object
-         ParseQuery<Game> gameQuery = gameRelation.getQuery();
-         return gameQuery.getFirst();
-
-      } catch (ParseException e) {
-         return null;
-      }
+      return (Game) getParseObject(POINTER_GAME);
    }
 
 
@@ -69,10 +58,13 @@ public class Team extends ParseObject {
 
    public List<Player> getTeamMembers () {
 
-      ParseQuery<Player> playerQuery = ParseQuery.getQuery(Player.class);
-      playerQuery.whereEqualTo(Player.RELATION_TEAM, this);
+      ParseQuery<Player> query = ParseQuery.getQuery(Player.class);
+      query.whereEqualTo(Player.POINTER_TEAM, this);
+      query.include(Player.POINTER_GAME);
+      query.include(Player.POINTER_TEAM);
+      query.include(Player.POINTER_USER);
       try {
-         return playerQuery.find();
+         return query.find();
       } catch (ParseException e) {
          return new ArrayList<>();
       }
@@ -82,7 +74,7 @@ public class Team extends ParseObject {
    public void getTeamMembersInBackground (FindCallback<Player> callback) {
 
       ParseQuery<Player> playerQuery = ParseQuery.getQuery(Player.class);
-      playerQuery.whereEqualTo(Player.RELATION_TEAM, this);
+      playerQuery.whereEqualTo(Player.POINTER_TEAM, this);
       playerQuery.findInBackground(callback);
    }
 

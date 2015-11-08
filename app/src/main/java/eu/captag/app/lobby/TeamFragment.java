@@ -3,26 +3,17 @@ package eu.captag.app.lobby;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-
-import java.text.DateFormat;
 import java.util.List;
 
 import eu.captag.R;
-import eu.captag.app.BaseActivity;
 import eu.captag.app.BaseFragment;
 import eu.captag.app.lobby.adapter.PlayerAdapter;
-import eu.captag.model.Game;
 import eu.captag.model.Player;
 import eu.captag.model.Team;
 import eu.captag.util.DividerItemDecoration;
@@ -58,11 +49,6 @@ public class TeamFragment extends BaseFragment {
 
 
    // endregion
-
-
-   private void onLeaveGameClicked () {
-
-   }
 
 
    public Team getTeam () {
@@ -104,22 +90,12 @@ public class TeamFragment extends BaseFragment {
 
    private void retrieveTeamMembers () {
 
+      // Get the team members
       Team team = getTeam();
-      team.getTeamMembersInBackground(new FindCallback<Player>() {
-         @Override
-         public void done (List<Player> players, ParseException e) {
-            if (players != null) {
-               PlayerAdapter teamMemberAdapter = getTeamMemberAdapter();
-               teamMemberAdapter.setPlayers(players);
-               teamMemberAdapter.notifyDataSetChanged();
-            } else {
-
-               String message = getString(R.string.error_loadingTeamMembersFailed);
-               BaseActivity activity = (BaseActivity) getActivity();
-               activity.showErrorSnackbar(message, Snackbar.LENGTH_LONG);
-            }
-         }
-      });
+      List<Player> teamMembers = team.getTeamMembers();
+      // Update the player adapter
+      PlayerAdapter adapter = getTeamMemberAdapter();
+      adapter.setPlayers(teamMembers);
    }
 
 

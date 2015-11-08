@@ -23,7 +23,7 @@ public class Tag extends ParseObject {
    public static final String ATTRIBUTE_GEO_POINT = "geoPoint";
    public static final String ATTRIBUTE_LABEL = "label";
 
-   public static final String RELATION_GAME = "game";
+   public static final String POINTER_GAME = "game";
    public static final String RELATION_PLAYER = "player";
    public static final String RELATION_TEAM = "team";
 
@@ -33,7 +33,7 @@ public class Tag extends ParseObject {
 
    public Game getGame () {
 
-      ParseRelation<Game> gameRelation = getRelation(RELATION_GAME);
+      ParseRelation<Game> gameRelation = getRelation(POINTER_GAME);
       ParseQuery<Game> gameQuery = gameRelation.getQuery();
       try {
          return gameQuery.getFirst();

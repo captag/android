@@ -7,6 +7,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,8 +26,6 @@ public class Game extends ParseObject {
    public static final String ATTRIBUTE_NAME = "name";
    public static final String ATTRIBUTE_START_DATE = "startAt";
 
-   public static final String RELATION_TAGS = "tags";
-
 
    // endregion
 
@@ -43,32 +42,38 @@ public class Game extends ParseObject {
 
    public List<Tag> getTags () {
 
-      ParseQuery<Tag> tagQuery = ParseQuery.getQuery(Tag.class);
-      tagQuery.whereEqualTo(Tag.RELATION_GAME, this);
       try {
-         return tagQuery.find();
+
+         ParseQuery<Tag> query = ParseQuery.getQuery(Tag.class);
+         query.whereEqualTo(Tag.POINTER_GAME, this);
+         return query.find();
+
       } catch (ParseException e) {
-         return null;
+         // Return a empty list if there was a error
+         return new ArrayList<>();
       }
    }
 
 
    public void getTagsInBackground (FindCallback<Tag> findCallback) {
 
-      ParseQuery<Tag> tagQuery = ParseQuery.getQuery(Tag.class);
-      tagQuery.whereEqualTo(Tag.RELATION_GAME, this);
-      tagQuery.findInBackground(findCallback);
+      ParseQuery<Tag> query = ParseQuery.getQuery(Tag.class);
+      query.whereEqualTo(Tag.POINTER_GAME, this);
+      query.findInBackground(findCallback);
    }
 
 
    public List<Team> getTeams () {
 
-      ParseQuery<Team> teamQuery = ParseQuery.getQuery(Team.class);
-      teamQuery.whereEqualTo(Team.RELATION_GAME, this);
       try {
-         return teamQuery.find();
+
+         ParseQuery<Team> query = ParseQuery.getQuery(Team.class);
+         query.whereEqualTo(Team.POINTER_GAME, this);
+         return query.find();
+
       } catch (ParseException e) {
-         return null;
+         // Return a empty list if there was a error
+         return new ArrayList<>();
       }
    }
 
