@@ -18,6 +18,9 @@
 	<string name="hint_password">Password</string>
 	<string name="hint_username">Username</string>
 
+	<!-- messages -->
+	<string name="message_gameAlreadyStarted">Game already started</string>
+
 	<!-- subheads -->
 	<string name="subhead_games">Games</string>
 	<string name="subhead_teams">Teams</string>
@@ -27,6 +30,7 @@
 	<string name="title_button_joinTeam">Join</string>
 	<string name="title_button_leaveGame">Leave</string>
 	<string name="title_button_login">Login</string>
+	<string name="title_button_play">Play</string>
 	<string name="title_button_signUp">Sign up</string>
 
 </resources>

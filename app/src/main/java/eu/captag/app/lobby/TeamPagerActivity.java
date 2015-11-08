@@ -11,19 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import junit.framework.Test;
-
 import java.text.DateFormat;
-import java.util.List;
 
 import eu.captag.R;
 import eu.captag.app.BaseActivity;
+import eu.captag.app.game.GameMapActivity;
 import eu.captag.app.lobby.adapter.TeamPageAdapter;
 import eu.captag.model.Game;
 import eu.captag.model.Player;
@@ -69,6 +66,7 @@ public class TeamPagerActivity extends BaseActivity {
       // Initialize
       initializeHeader();
       initializeViews();
+      initializeFooter();
    }
 
 
@@ -81,8 +79,8 @@ public class TeamPagerActivity extends BaseActivity {
       ParseUser user = ParseUser.getCurrentUser();
 
       ParseQuery<Player> playerQuery = ParseQuery.getQuery(Player.class);
-      playerQuery.whereEqualTo(Player.RELATION_USER, user);
-      playerQuery.whereEqualTo(Player.RELATION_GAME, game);
+      playerQuery.whereEqualTo(Player.POINTER_USER, user);
+      playerQuery.whereEqualTo(Player.POINTER_GAME, game);
 
       playerQuery.getFirstInBackground(new GetCallback<Player>() {
          @Override
@@ -93,6 +91,13 @@ public class TeamPagerActivity extends BaseActivity {
             }
          }
       });
+   }
+
+
+   private void onPlayClicked () {
+
+      Game game = getGame();
+      GameMapActivity.start(this, game);
    }
 
 
@@ -174,6 +179,33 @@ public class TeamPagerActivity extends BaseActivity {
          @Override
          public void onTabReselected (TabLayout.Tab tab) {}
       });
+   }
+
+
+   private void initializeFooter () {
+
+      Game game = getGame();
+      // Find the play button and set the click listener
+      Button playButton = getView(R.id.button_play);
+      playButton.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick (View v) {
+            onPlayClicked();
+         }
+      });
+      // Show or hide the play button according to the game status
+      switch (game.getStatus()) {
+         case Game.STATUS_NEW:
+         case Game.STATUS_INFORMED:
+         case Game.STATUS_FINISHED: {
+            playButton.setVisibility(View.GONE);
+            break;
+         }
+         case Game.STATUS_STARTED: {
+            playButton.setVisibility(View.VISIBLE);
+            break;
+         }
+      }
    }
 
 

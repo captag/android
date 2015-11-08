@@ -119,18 +119,8 @@ public class PlayerView extends LinearLayout {
       }
 
       // region Update the username text view
-      player.getUserInBackground(new GetCallback<ParseUser>() {
-         @Override
-         public void done (ParseUser user, ParseException e) {
-            if (user != null) {
-               String username = user.getUsername();
-               usernameView.setText(username);
-            } else {
-               usernameView.setText("WTF");
-            }
-         }
-      });
-
+      ParseUser user = player.getUser();
+      usernameView.setText(user.getUsername());
       // endregion
    }
 
