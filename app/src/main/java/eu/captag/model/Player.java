@@ -43,27 +43,32 @@ public class Player extends ParseObject {
 
 
    public void setGame (Game game) {
-      this.put("game", game);
+        this.put("game",game);
+   }
+
+   public Team getTeam () {
+
+      ParseRelation<Team> relation = getRelation(RELATION_TEAM);
+      ParseQuery<Team> query = relation.getQuery();
+      try {
+         return query.getFirst();
+      } catch (ParseException e) {
+         return null;
+      }
    }
 
 
    public void setTeam (Team team) {
-      this.put("team", team);
-   }
-
-
-   public void setUser (ParseUser user) {
-
-      this.put("user", user);
+        this.put("team",team);
    }
 
 
    public ParseUser getUser () {
 
-      ParseRelation<ParseUser> userRelation = getRelation(RELATION_USER);
-      ParseQuery<ParseUser> userQuery = userRelation.getQuery();
+      ParseRelation<ParseUser> relation = getRelation(RELATION_USER);
+      ParseQuery<ParseUser> query = relation.getQuery();
       try {
-         return userQuery.getFirst();
+         return query.getFirst();
       } catch (ParseException e) {
          return null;
       }
@@ -72,8 +77,13 @@ public class Player extends ParseObject {
 
    public void getUserInBackground (GetCallback<ParseUser> getCallback) {
 
-      ParseRelation<ParseUser> userRelation = getRelation(RELATION_USER);
-      ParseQuery<ParseUser> userQuery = userRelation.getQuery();
-      userQuery.getFirstInBackground(getCallback);
+      ParseRelation<ParseUser> relation = getRelation(RELATION_USER);
+      ParseQuery<ParseUser> query = relation.getQuery();
+      query.getFirstInBackground(getCallback);
+   }
+
+
+   public void setUser (ParseUser user) {
+        this.put("user", user);
    }
 }
