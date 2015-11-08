@@ -59,13 +59,21 @@ public class GameSelectionActivity extends BaseActivity implements GameAdapter.I
    public void onJoinGameClicked (Game game) {
       for (Team team : game.getTeams()) {
          for (Player player : team.getTeamMembers()) {
-            if (player.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+            if (isCurrentUser(player)) {
                TeamPagerActivity.start(this, game);
                return;
             }
          }
       }
       JoinTeamActivity.start(this, game);
+   }
+
+
+   private boolean isCurrentUser (Player player) {
+
+      ParseUser user = player.getUser();
+      ParseUser currentUser = ParseUser.getCurrentUser();
+      return user.getObjectId().equals(currentUser.getObjectId());
    }
 
 
@@ -123,6 +131,8 @@ public class GameSelectionActivity extends BaseActivity implements GameAdapter.I
       };
 
       ParseQuery<Game> query = ParseQuery.getQuery(Game.class);
+      query.whereNotEqualTo(Game.ATTRIBUTE_STATUS, Game.STATUS_FINISHED);
+      query.whereNotEqualTo(Game.ATTRIBUTE_STATUS, Game.STATUS_STARTED);
       query.findInBackground(findCallback);
    }
 

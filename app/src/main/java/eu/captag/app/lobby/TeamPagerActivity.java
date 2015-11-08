@@ -20,6 +20,7 @@ import java.text.DateFormat;
 
 import eu.captag.R;
 import eu.captag.app.BaseActivity;
+import eu.captag.app.game.GameMapActivity;
 import eu.captag.app.lobby.adapter.TeamPageAdapter;
 import eu.captag.model.Game;
 import eu.captag.model.Player;
@@ -65,6 +66,7 @@ public class TeamPagerActivity extends BaseActivity {
       // Initialize
       initializeHeader();
       initializeViews();
+      initializeFooter();
    }
 
 
@@ -89,6 +91,13 @@ public class TeamPagerActivity extends BaseActivity {
             }
          }
       });
+   }
+
+
+   private void onPlayClicked () {
+
+      Game game = getGame();
+      GameMapActivity.start(this, game);
    }
 
 
@@ -170,6 +179,33 @@ public class TeamPagerActivity extends BaseActivity {
          @Override
          public void onTabReselected (TabLayout.Tab tab) {}
       });
+   }
+
+
+   private void initializeFooter () {
+
+      Game game = getGame();
+      // Find the play button and set the click listener
+      Button playButton = getView(R.id.button_play);
+      playButton.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick (View v) {
+            onPlayClicked();
+         }
+      });
+      // Show or hide the play button according to the game status
+      switch (game.getStatus()) {
+         case Game.STATUS_NEW:
+         case Game.STATUS_INFORMED:
+         case Game.STATUS_FINISHED: {
+            playButton.setVisibility(View.GONE);
+            break;
+         }
+         case Game.STATUS_STARTED: {
+            playButton.setVisibility(View.VISIBLE);
+            break;
+         }
+      }
    }
 
 

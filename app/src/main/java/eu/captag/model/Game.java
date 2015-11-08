@@ -25,6 +25,12 @@ public class Game extends ParseObject {
 
    public static final String ATTRIBUTE_NAME = "name";
    public static final String ATTRIBUTE_START_DATE = "startAt";
+   public static final String ATTRIBUTE_STATUS = "status";
+
+   public static final String STATUS_INFORMED = "informed";
+   public static final String STATUS_NEW = "new";
+   public static final String STATUS_STARTED = "started";
+   public static final String STATUS_FINISHED = "finished";
 
 
    // endregion
@@ -37,6 +43,11 @@ public class Game extends ParseObject {
 
    public Date getStartDate () {
       return getDate(ATTRIBUTE_START_DATE);
+   }
+
+
+   public String getStatus () {
+      return getString(ATTRIBUTE_STATUS);
    }
 
 
