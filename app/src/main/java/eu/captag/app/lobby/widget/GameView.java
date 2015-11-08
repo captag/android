@@ -144,11 +144,14 @@ public class GameView extends LinearLayout {
          throw new IllegalStateException(message);
       }
 
-      Picasso.with(getContext())
-            .load(game.getIcon())
-            .placeholder(R.mipmap.ic_game_icon_placeholder_black_40dp)
-            .error(R.mipmap.ic_game_icon_placeholder_black_40dp)
-            .into(iconView);
+      String iconUrl = game.getIcon();
+      if (iconUrl != null && !iconUrl.isEmpty()) {
+         Picasso.with(getContext())
+                .load(game.getIcon())
+                .placeholder(R.mipmap.ic_game_icon_placeholder_black_40dp)
+                .error(R.mipmap.ic_game_icon_placeholder_black_40dp)
+                .into(iconView);
+      }
 
       // region Update the subtitle text view
       DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);

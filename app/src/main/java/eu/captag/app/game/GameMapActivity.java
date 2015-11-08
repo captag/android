@@ -1,6 +1,7 @@
 package eu.captag.app.game;
 
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +13,11 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ import com.parse.GetCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -377,6 +381,7 @@ public class GameMapActivity extends BaseActivity implements OnMapReadyCallback,
    }
 
 
+   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
    private void updateTagMarkers (List<Tag> tags) {
 
       GoogleMap googleMap = getGoogleMap();
@@ -462,14 +467,14 @@ public class GameMapActivity extends BaseActivity implements OnMapReadyCallback,
       payload.put("tagId", tagId);
       payload.put("teamId", team.getObjectId());
 
-      FunctionCallback<JSONObject> functionCallback = new FunctionCallback<JSONObject>() {
+      FunctionCallback<ParseObject> functionCallback = new FunctionCallback<ParseObject>() {
          @Override
-         public void done (JSONObject responseBody, ParseException e) {
+         public void done (ParseObject responseBody, ParseException e) {
             if (e == null) {
                Toast.makeText(GameMapActivity.this, "No error", Toast.LENGTH_SHORT).show();
             } else {
-               Toast.makeText(GameMapActivity.this, "Error " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+               String message = getString(R.string.error_capturingTagFailed);
+               showErrorSnackbar(message, Snackbar.LENGTH_LONG);}
          }
       };
       ParseCloud.callFunctionInBackground("capture", payload, functionCallback);

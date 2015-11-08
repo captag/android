@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -36,6 +37,18 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
       a.recycle();
 
       setOrientation(orientation);
+   }
+
+
+   public void setDividerDrawable (Context context, @DrawableRes int id) {
+
+      //noinspection deprecation
+      setDividerDrawable(context.getResources().getDrawable(id));
+   }
+
+
+   public void setDividerDrawable (Drawable dividerDrawable) {
+      this.dividerDrawable = dividerDrawable;
    }
 
 

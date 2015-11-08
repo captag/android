@@ -9,13 +9,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
+import com.parse.PushService;
 import com.parse.SaveCallback;
 
 import java.util.List;
 
 import eu.captag.R;
 import eu.captag.app.BaseActivity;
-import eu.captag.app.game.GameMapActivity;
 import eu.captag.app.lobby.adapter.TeamAdapter;
 import eu.captag.model.Game;
 import eu.captag.model.Player;
@@ -65,12 +67,15 @@ public class JoinTeamActivity extends BaseActivity implements TeamAdapter.Intera
       player.setTeam(team);
       player.setUser(getUser());
 
+      // Subscript for notification
+      Game game = getGame();
+      ParsePush.subscribeInBackground(game.getObjectId());
+
       SaveCallback saveCallback = new SaveCallback() {
          @Override
          public void done (ParseException e) {
             if (e == null) {
-               GameMapActivity.start(JoinTeamActivity.this, getGame());
-               // TeamPagerActivity.start(JoinTeamActivity.this, getGame());
+               TeamPagerActivity.start(JoinTeamActivity.this, getGame());
                // Finish this activity to prevent the user from navigating back
                finish();
             } else {

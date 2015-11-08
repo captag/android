@@ -102,8 +102,13 @@ public class GameSelectionActivity extends BaseActivity implements GameAdapter.I
 
    private void initializeViews () {
 
+      DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+            this, DividerItemDecoration.VERTICAL
+      );
+      dividerItemDecoration.setDividerDrawable(this, R.drawable.divider_horizontal_inset_left_72dp);
+
       RecyclerView gamesRecyclerView = getView(R.id.recyclerView_games);
-      gamesRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+      gamesRecyclerView.addItemDecoration(dividerItemDecoration);
       gamesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
       gamesRecyclerView.setAdapter(getGameAdapter());
    }

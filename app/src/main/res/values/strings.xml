@@ -6,6 +6,7 @@
 	<string name="action_scanQrCode">Scan QR code</string>
 
 	<!-- errors -->
+	<string name="error_capturingTagFailed">Capturing tag failed</string>
 	<string name="error_joiningTeamFailed">Joining team failed</string>
 	<string name="error_loginFailed">Login failed</string>
 	<string name="error_loadingGamesFailed">Loading games failed</string>
