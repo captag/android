@@ -43,16 +43,18 @@ public class Player extends ParseObject {
 
 
    public void setGame (Game game) {
-
-      ParseRelation<Game> gameRelation = getRelation(RELATION_GAME);
-      gameRelation.add(game);
+      this.put("game", game);
    }
 
 
    public void setTeam (Team team) {
+      this.put("team", team);
+   }
 
-      ParseRelation<Team> teamRelation = getRelation(RELATION_TEAM);
-      teamRelation.add(team);
+
+   public void setUser (ParseUser user) {
+
+      this.put("user", user);
    }
 
 
@@ -73,12 +75,5 @@ public class Player extends ParseObject {
       ParseRelation<ParseUser> userRelation = getRelation(RELATION_USER);
       ParseQuery<ParseUser> userQuery = userRelation.getQuery();
       userQuery.getFirstInBackground(getCallback);
-   }
-
-
-   public void setUser (ParseUser user) {
-
-      ParseRelation<ParseUser> userRelation = getRelation(RELATION_USER);
-      userRelation.add(user);
    }
 }
