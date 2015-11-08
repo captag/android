@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -77,12 +78,13 @@ public class TeamPagerActivity extends BaseActivity {
 
       Game game = getGame();
       ParseUser user = ParseUser.getCurrentUser();
-
-      ParseQuery<Player> playerQuery = ParseQuery.getQuery(Player.class);
-      playerQuery.whereEqualTo(Player.POINTER_USER, user);
-      playerQuery.whereEqualTo(Player.POINTER_GAME, game);
-
-      playerQuery.getFirstInBackground(new GetCallback<Player>() {
+      // Unsubscribe for notification
+      ParsePush.unsubscribeInBackground(game.getObjectId());
+      // Delete player
+      ParseQuery<Player> query = ParseQuery.getQuery(Player.class);
+      query.whereEqualTo(Player.POINTER_USER, user);
+      query.whereEqualTo(Player.POINTER_GAME, game);
+      query.getFirstInBackground(new GetCallback<Player>() {
          @Override
          public void done (Player player, ParseException e) {
             if (player != null) {
