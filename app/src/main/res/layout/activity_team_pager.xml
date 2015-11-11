@@ -41,12 +41,22 @@
 			</LinearLayout>
 
 			<Button
-				android:id="@+id/button_leaveGame"
+				android:id="@+id/button_leaveTeam"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
-				android:text="@string/title_button_leaveGame"
-				android:theme="@style/Theme.Captag.Button.Accent"/>
+				android:text="@string/title_button_leaveTeam"
+				android:theme="@style/Theme.Captag.Button.Accent"
+				android:visibility="gone"/>
+
+			<Button
+				android:id="@+id/button_joinTeam"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:text="@string/title_button_joinTeam"
+				android:theme="@style/Theme.Captag.Button.Accent"
+				android:visibility="gone"/>
 
 		</LinearLayout>
 
@@ -75,9 +85,9 @@
 			android:layout_height="wrap_content"
 			android:minHeight="?attr/listPreferredItemHeight"
 			android:background="@drawable/background_accent"
-			android:elevation="30dp"
 			android:text="@string/title_button_play"
-			android:textSize="@dimen/textSize_title"/>
+			android:textSize="@dimen/textSize_title"
+			android:visibility="gone"/>
 
 	</LinearLayout>
 

@@ -29,25 +29,43 @@ public class Tag extends ParseObject {
 
 
    // endregion
+   // region Fields
 
 
+   private Game game;
+
+
+   // endregion
+
+
+   /**
+    * Returns the game to which this tag is assigned.
+    */
    public Game getGame () {
-
-      ParseRelation<Game> gameRelation = getRelation(POINTER_GAME);
-      ParseQuery<Game> gameQuery = gameRelation.getQuery();
-      try {
-         return gameQuery.getFirst();
-      } catch (ParseException e) {
-         return null;
-      }
+      return game;
    }
 
 
+   /**
+    * Sets the game to which this tag is assigned.
+    * @param game The game to set.
+    */
+   void setGame (Game game) {
+      this.game = game;
+   }
+
+
+   /**
+    * Returns the geo point of this tag.
+    */
    public ParseGeoPoint getGeoPoint () {
       return getParseGeoPoint(ATTRIBUTE_GEO_POINT);
    }
 
 
+   /**
+    * Returns the label of this tag.
+    */
    public String getLable () {
       return getString(ATTRIBUTE_LABEL);
    }

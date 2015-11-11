@@ -5,19 +5,24 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.text.DateFormat;
+import java.util.List;
 
 import eu.captag.R;
 import eu.captag.app.BaseActivity;
@@ -35,7 +40,10 @@ import eu.captag.model.Team;
 public class TeamPagerActivity extends BaseActivity {
 
 
+   private Button joinTeamButton;
+   private Button leaveTeamButton;
    private TeamPageAdapter teamPageAdapter;
+
 
 
    public static void start (Activity activity, Game game) {
@@ -64,17 +72,60 @@ public class TeamPagerActivity extends BaseActivity {
 
       super.onCreate(instanceState);
       setContentView(R.layout.activity_team_pager);
-      // Initialize
-      initializeHeader();
-      initializeViews();
-      initializeFooter();
+      // Retrieve the game data
+      Game game = getGame();
+      retrieveTeams(game);
    }
 
 
    // endregion
 
 
-   private void onLeaveGameClicked () {
+   private void onLoadingDataDone () {
+
+      initializeHeader();
+      initializeTeamPager();
+      initializeFooter();
+   }
+
+
+   private void onJoinTeamClicked () {
+
+      // Subscript for notification
+      ViewPager viewPager = getView(R.id.viewPager);
+      final TeamPageAdapter teamPageAdapter = getTeamPageAdapter();
+
+      Game game = getGame();
+      Team team = teamPageAdapter.getTeam(viewPager.getCurrentItem());
+      ParseUser user = getUser();
+
+      // Create a new player
+      Player player = new Player();
+      player.setGame(game);
+      player.setTeam(team);
+      player.setUser(user);
+      // Save the player object in background
+      player.saveInBackground(new SaveCallback() {
+         @Override
+         public void done (ParseException e) {
+            if (e == null) {
+
+               // Update the team page adapter
+               teamPageAdapter.notifyDataSetChanged();
+               // Subscript for notifications
+               Game game = getGame();
+               ParsePush.subscribeInBackground(game.getObjectId());
+
+            } else {
+               String message = getString(R.string.error_joiningTeamFailed);
+               showErrorSnackbar(message, Snackbar.LENGTH_LONG);
+            }
+         }
+      });
+   }
+
+
+   private void onLeaveTeamClicked () {
 
       Game game = getGame();
       ParseUser user = ParseUser.getCurrentUser();
@@ -141,17 +192,28 @@ public class TeamPagerActivity extends BaseActivity {
       TextView gameStartDateView = getView(R.id.textView_gameStartDate);
       gameStartDateView.setText(dateFormat.format(game.getStartDate()));
 
-      Button leaveGameButton = getView(R.id.button_leaveGame);
-      leaveGameButton.setOnClickListener(new View.OnClickListener() {
+      // region Initialize the join team button
+      joinTeamButton = getView(R.id.button_joinTeam);
+      joinTeamButton.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick (View v) {
-            onLeaveGameClicked();
+            onJoinTeamClicked();
          }
       });
+      // endregion
+      // region Initialize the leave team button
+      leaveTeamButton = getView(R.id.button_leaveTeam);
+      leaveTeamButton.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick (View v) {
+            onLeaveTeamClicked();
+         }
+      });
+      // endregion
    }
 
 
-   private void initializeViews () {
+   private void initializeTeamPager () {
 
       TeamPageAdapter teamPageAdapter = getTeamPageAdapter();
 
@@ -166,6 +228,27 @@ public class TeamPagerActivity extends BaseActivity {
       final ViewPager viewPager = getView(R.id.viewPager);
       viewPager.setAdapter(teamPageAdapter);
       viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+      viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+         @Override
+         public void onPageSelected (int position) {
+
+            super.onPageSelected(position);
+
+            TeamPageAdapter teamPageAdapter = getTeamPageAdapter();
+            Team team = teamPageAdapter.getTeam(position);
+            if (team.isTeamMember(getUser())) {
+               joinTeamButton.setVisibility(View.GONE);
+               leaveTeamButton.setVisibility(View.VISIBLE);
+            } else {
+               joinTeamButton.setVisibility(View.VISIBLE);
+               leaveTeamButton.setVisibility(View.GONE);
+            }
+
+            Log.wtf("WTF", "onPageSelected(" + position + ")");
+         }
+      });
+
+      // Set the tag layout selection listner
       tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
          @Override
@@ -208,6 +291,27 @@ public class TeamPagerActivity extends BaseActivity {
             break;
          }
       }
+   }
+
+
+   // endregion
+   // region Communication with Captag Api
+
+
+   private void retrieveTeams (Game game) {
+
+      game.retrieveTeamsInBackground(new FindCallback<Team>() {
+         @Override
+         public void done (List<Team> teams, ParseException e) {
+            if (e == null) {
+               onLoadingDataDone();
+            } else {
+               // Show error message
+               String message = getString(R.string.error_loadingTeamsFailed);
+               showErrorSnackbar(message, Snackbar.LENGTH_INDEFINITE);
+            }
+         }
+      });
    }
 
 

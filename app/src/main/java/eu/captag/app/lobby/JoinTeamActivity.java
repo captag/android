@@ -83,6 +83,7 @@ public class JoinTeamActivity extends BaseActivity implements TeamAdapter.Intera
             }
          }
       };
+
       player.saveInBackground(saveCallback);
    }
 

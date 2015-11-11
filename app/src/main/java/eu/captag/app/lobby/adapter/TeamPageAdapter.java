@@ -19,6 +19,7 @@ import eu.captag.model.Team;
 public class TeamPageAdapter extends FragmentStatePagerAdapter {
 
 
+   int position = 0;
    private List<Team> teams;
 
 
@@ -30,6 +31,8 @@ public class TeamPageAdapter extends FragmentStatePagerAdapter {
    @Override
    public Fragment getItem (int position) {
 
+      this.position = position;
+
       Team team = getTeam(position);
       // Create the fragment
       TeamFragment fragment = new TeamFragment();
@@ -39,8 +42,19 @@ public class TeamPageAdapter extends FragmentStatePagerAdapter {
 
 
    @Override
+   public int getItemPosition (Object object) {
+      return POSITION_NONE;
+   }
+
+
+   @Override
    public int getCount () {
       return getTeams().size();
+   }
+
+
+   public int getPosition () {
+      return position;
    }
 
 

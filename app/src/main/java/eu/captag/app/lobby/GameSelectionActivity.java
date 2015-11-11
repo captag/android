@@ -58,10 +58,13 @@ public class GameSelectionActivity extends BaseActivity implements GameAdapter.I
    @Override
    public void onJoinGameClicked (Game game) {
 
+      TeamPagerActivity.start(this, game);
+
+      /*
       for (Team team : game.getTeams()) {
          for (Player player : team.getTeamMembers()) {
             if (isCurrentUser(player)) {
-               TeamPagerActivity.start(this, game);
+
                return;
             }
          }
@@ -74,6 +77,21 @@ public class GameSelectionActivity extends BaseActivity implements GameAdapter.I
 
       } else {
          JoinTeamActivity.start(this, game);
+      }
+      */
+   }
+
+
+   private void onLoadingGamesDone (List<Game> games) {
+
+      GameAdapter adapter = getGameAdapter();
+      adapter.setGames(games);
+      adapter.notifyDataSetChanged();
+
+      if (games.isEmpty()) {
+         // Show error message
+         String message = getString(R.string.error_noGamesFound);
+         showErrorSnackbar(message, Snackbar.LENGTH_LONG);
       }
    }
 
@@ -118,24 +136,17 @@ public class GameSelectionActivity extends BaseActivity implements GameAdapter.I
    // region Communication with Captag Api
 
 
+   /**
+    * Retrieves a list of Games.
+    */
    private void retrieveGames () {
 
-      FindCallback<Game> findCallback = new FindCallback<Game>() {
+      FindCallback<Game> callback = new FindCallback<Game>() {
          @Override
          public void done (List<Game> games, ParseException e) {
 
-            if (games != null) {
-               if (!games.isEmpty()) {
-
-                  GameAdapter adapter = getGameAdapter();
-                  adapter.setGames(games);
-                  adapter.notifyDataSetChanged();
-
-               } else {
-                  // Show error message
-                  String message = getString(R.string.error_noGamesFound);
-                  showErrorSnackbar(message, Snackbar.LENGTH_LONG);
-               }
+            if (e == null) {
+               onLoadingGamesDone(games);
             } else {
                // Show error message
                String message = getString(R.string.error_loadingGamesFailed);
@@ -146,7 +157,7 @@ public class GameSelectionActivity extends BaseActivity implements GameAdapter.I
 
       ParseQuery<Game> query = ParseQuery.getQuery(Game.class);
       query.whereNotEqualTo(Game.ATTRIBUTE_STATUS, Game.STATUS_FINISHED);
-      query.findInBackground(findCallback);
+      query.findInBackground(callback);
    }
 
 

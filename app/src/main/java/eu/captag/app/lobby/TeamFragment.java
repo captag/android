@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+
 import java.util.List;
 
 import eu.captag.R;
@@ -92,10 +95,15 @@ public class TeamFragment extends BaseFragment {
 
       // Get the team members
       Team team = getTeam();
-      List<Player> teamMembers = team.getTeamMembers();
-      // Update the player adapter
-      PlayerAdapter adapter = getTeamMemberAdapter();
-      adapter.setPlayers(teamMembers);
+      team.retrieveTeamMembersInBackground(new FindCallback<Player>() {
+         @Override
+         public void done (List<Player> teamMembers, ParseException e) {
+            // Update the player adapter
+            PlayerAdapter adapter = getTeamMemberAdapter();
+            adapter.setPlayers(teamMembers);
+            adapter.notifyDataSetChanged();
+         }
+      });
    }
 
 
