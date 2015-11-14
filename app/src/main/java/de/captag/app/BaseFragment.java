@@ -5,12 +5,24 @@ import android.app.Fragment;
 import android.support.annotation.IdRes;
 import android.view.View;
 
+import com.parse.ParseUser;
+
 
 /**
- * TODO Write documentation
+ * Base class for all fragments in captag.
  * @author Ulrich Raab
  */
 public class BaseFragment extends Fragment {
+
+
+
+   /**
+    * Returns the currently logged in user.
+    * @return The currently logged in user.
+    */
+   public ParseUser getUser () {
+      return ParseUser.getCurrentUser();
+   }
 
 
    /**
