@@ -1,4 +1,4 @@
-package eu.captag;
+package de.captag;
 
 
 import org.junit.Test;

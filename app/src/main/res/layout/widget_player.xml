@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<eu.captag.app.lobby.widget.PlayerView
+<de.captag.app.lobby.widget.PlayerView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/playerView"
 	android:layout_width="match_parent"
@@ -13,4 +13,4 @@
 		android:layout_height="wrap_content"
 		android:textAppearance="@style/Theme.Captag.TextAppearance.ListItem.Primary"/>
 
-</eu.captag.app.lobby.widget.PlayerView>
+</de.captag.app.lobby.widget.PlayerView>

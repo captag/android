@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-	package="eu.captag"
+	package="de.captag"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools">
 
@@ -21,12 +21,12 @@
       to match your app's package name + ".permission.C2D_MESSAGE".
     -->
 	<permission
-		android:name="eu.captag.permission.C2D_MESSAGE"
+		android:name="de.captag.permission.C2D_MESSAGE"
 		android:protectionLevel="signature"/>
 	<uses-permission android:name="eu.captag.permission.C2D_MESSAGE"/>
 
 	<application
-		android:name=".Captag"
+		android:name="de.captag.Captag"
 		android:allowBackup="true"
 		android:icon="@mipmap/ic_launcher"
 		android:label="@string/app_name"
@@ -42,7 +42,7 @@
 			android:value="AIzaSyDDRfrXVPXJBBuchYBJk0QodkNsU_j4hL4"/>
 
 		<activity
-			android:name=".app.LoginActivity"
+			android:name="de.captag.app.LoginActivity"
 			android:screenOrientation="portrait">
 
 			<intent-filter>
@@ -53,27 +53,27 @@
 		</activity>
 
 		<activity
-			android:name=".app.SignUpActivity"
+			android:name="de.captag.app.SignUpActivity"
 			android:screenOrientation="portrait"/>
 
 		<activity
-			android:name=".app.lobby.GameSelectionActivity"
+			android:name="de.captag.app.lobby.GameSelectionActivity"
 			android:screenOrientation="portrait"/>
 
 		<activity
-			android:name=".app.lobby.JoinTeamActivity"
+			android:name="de.captag.app.lobby.JoinTeamActivity"
 			android:screenOrientation="portrait"/>
 
 		<activity
-			android:name=".app.lobby.TeamPagerActivity"
+			android:name="de.captag.app.lobby.TeamPagerActivity"
 			android:screenOrientation="portrait"/>
 
 		<activity
-			android:name=".app.game.GameMapActivity"
+			android:name="de.captag.app.game.GameMapActivity"
 			android:screenOrientation="portrait"/>
 
 		<activity
-			android:name=".app.game.QrCodeScannerActivity"
+			android:name="de.captag.app.game.QrCodeScannerActivity"
 			android:screenOrientation="portrait"/>
 
 		<service android:name="com.parse.PushService"/>
