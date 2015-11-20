@@ -134,7 +134,9 @@ public class Game extends ParseObject {
             if (e == null) {
 
                setTags(tags);
-
+               for (Tag tag : tags) {
+                  tag.setGame(Game.this);
+               }
 
             } else {
                // TODO log exception with crashlytics

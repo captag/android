@@ -15,6 +15,7 @@
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
 	<uses-permission android:name="android.permission.CAMERA"/>
+	<uses-permission android:name="android.permission.FLASHLIGHT"/>
 
 	<!--
       IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
@@ -41,8 +42,11 @@
 			android:name="com.google.android.maps.v2.API_KEY"
 			android:value="AIzaSyDDRfrXVPXJBBuchYBJk0QodkNsU_j4hL4"/>
 
+
+		<!-- ACTIVITIES -->
+
 		<activity
-			android:name="de.captag.app.LoginActivity"
+			android:name="de.captag.app.authentication.LoginSignupActivity"
 			android:screenOrientation="portrait">
 
 			<intent-filter>
@@ -53,20 +57,9 @@
 		</activity>
 
 		<activity
-			android:name="de.captag.app.SignUpActivity"
+			android:name="de.captag.app.MainActivity"
 			android:screenOrientation="portrait"/>
 
-		<activity
-			android:name="de.captag.app.lobby.GameSelectionActivity"
-			android:screenOrientation="portrait"/>
-
-		<activity
-			android:name="de.captag.app.lobby.JoinTeamActivity"
-			android:screenOrientation="portrait"/>
-
-		<activity
-			android:name="de.captag.app.lobby.TeamPagerActivity"
-			android:screenOrientation="portrait"/>
 
 		<activity
 			android:name="de.captag.app.game.GameMapActivity"
@@ -75,6 +68,9 @@
 		<activity
 			android:name="de.captag.app.game.QrCodeScannerActivity"
 			android:screenOrientation="portrait"/>
+
+
+		<!-- SERVICES -->
 
 		<service android:name="com.parse.PushService"/>
 

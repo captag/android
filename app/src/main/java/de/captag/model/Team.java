@@ -3,12 +3,15 @@ package de.captag.model;
 
 import android.graphics.Color;
 
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,15 +99,30 @@ public class Team extends ParseObject {
          return false;
       }
 
-      String userId = user.getObjectId();
       for (Player teamMember : getTeamMembers()) {
-         String teamMemberId = teamMember.getUser().getObjectId();
-         if (userId.equals(teamMemberId)) {
+         if (teamMember.isUser(user)) {
             return true;
          }
       }
 
       return false;
+   }
+
+
+   /**
+    * Returns the team member representing the given user.
+    * @param user The user.
+    * @return The team member if the given user is a member of this team, null otherwise.
+    */
+   public Player getTeamMember (ParseUser user) {
+
+      for (Player teamMember : getTeamMembers()) {
+         if (teamMember.isUser(user)) {
+            return teamMember;
+         }
+      }
+
+      return null;
    }
 
 
@@ -131,7 +149,93 @@ public class Team extends ParseObject {
 
 
    /**
-    * Retrieves a list of Player that are members of this team.
+    * Added the given user to this team.
+    * @param user The user to add.
+    * @param callback The callback which handles the result of the request.
+    */
+   public void joinInBackground (ParseUser user, final SaveCallback callback) {
+
+      if (user == null) {
+         String message = "user must be not null";
+         throw new IllegalArgumentException(message);
+      }
+
+      Game game = getGame();
+
+      // Create a new player object
+      final Player player = new Player();
+      player.setGame(game);
+      player.setTeam(this);
+      player.setUser(user);
+
+      // Create a new SaveCallback
+      SaveCallback wrapper = new SaveCallback() {
+         @Override
+         public void done (ParseException e) {
+
+            if (e == null) {
+               // Subscribe for notifications
+               Game game = getGame();
+               ParsePush.subscribeInBackground(game.getObjectId());
+               // Add the saved player to the team members list
+               List<Player> teamMembers = getTeamMembers();
+               teamMembers.add(player);
+            }
+
+            if (callback != null) {
+               callback.done(e);
+            }
+         }
+      };
+
+      // Save the player
+      player.saveInBackground(wrapper);
+   }
+
+
+   /**
+    * Removes the given user from this team.
+    * @param user The user to remove.
+    * @param callback The callback which handles the result of the request.
+    */
+   public void leaveInBackground (ParseUser user, final DeleteCallback callback) {
+
+      if (user == null) {
+         String message = "user must be not null";
+         throw new IllegalArgumentException(message);
+      }
+
+      final Player teamMember = getTeamMember(user);
+      if (teamMember == null) {
+         return;
+      }
+
+      // Create a new DeleteCallback
+      DeleteCallback wrapper = new DeleteCallback() {
+         @Override
+         public void done (ParseException e) {
+
+            if (e == null) {
+               // Subscribe for notifications
+               Game game = getGame();
+               ParsePush.unsubscribeInBackground(game.getObjectId());
+               // Remove the deleted player from the team members list
+               List<Player> teamMembers = getTeamMembers();
+               teamMembers.remove(teamMember);
+            }
+
+            if (callback != null) {
+               callback.done(e);
+            }
+         }
+      };
+
+      teamMember.deleteInBackground(wrapper);
+   }
+
+
+   /**
+    * Retrieves a list of players that are members of this team.
     * @param callback The callback which handles the result of the request.
     */
    public void retrieveTeamMembersInBackground (final FindCallback<Player> callback) {
@@ -141,7 +245,13 @@ public class Team extends ParseObject {
          public void done (List<Player> temMembers, ParseException e) {
 
             if (e == null) {
+
                setTeamMembers(temMembers);
+               for (Player player : temMembers) {
+                  player.setGame(Team.this.getGame());
+                  player.setTeam(Team.this);
+               }
+
             }
 
             if (callback != null) {

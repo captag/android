@@ -7,10 +7,13 @@
 	<color name="colorPrimary">#212121</color>
 	<color name="colorPrimaryDark">#000000</color>
 	<color name="colorAccent">@color/captag_red</color>
+	<color name="colorAccent_a26">#42F13F4D</color>
 	<!-- material design divider color-->
 	<color name="divider">#1FFFFFFF</color>
 
 	<color name="black">#000000</color>
+	<color name="black_a10">#1A000000</color>
+	<color name="black_a26">#42000000</color>
 	<color name="white">#FFFFFF</color>
 
 </resources>

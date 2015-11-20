@@ -1,9 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/recyclerView_teamMembers"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:scrollbars="vertical"
-	app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+	android:orientation="vertical"
+	app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+	<Button
+		android:id="@+id/button_joinTeam"
+		android:layout_width="match_parent"
+		android:layout_height="?attr/listPreferredItemHeightLarge"
+		android:padding="16dp"
+		android:background="@drawable/background_white"
+		android:drawableLeft="@drawable/ic_plus_circle_24dp"
+		android:drawableStart="@drawable/ic_plus_circle_24dp"
+		android:drawablePadding="32dp"
+		android:gravity="start|center_vertical"
+		android:text="@string/action_joinTeam"
+		android:textColor="@color/black"
+		android:textSize="@dimen/textSize_medium"
+		android:visibility="gone"/>
+
+
+	<Button
+		android:id="@+id/button_leaveTeam"
+		android:layout_width="match_parent"
+		android:layout_height="?attr/listPreferredItemHeightLarge"
+		android:padding="16dp"
+		android:background="@drawable/background_white"
+		android:drawableLeft="@drawable/ic_close_circle_24dp"
+		android:drawableStart="@drawable/ic_close_circle_24dp"
+		android:drawablePadding="32dp"
+		android:gravity="start|center_vertical"
+		android:text="@string/action_leaveTeam"
+		android:textColor="@color/black"
+		android:textSize="@dimen/textSize_medium"
+		android:visibility="gone"/>
+
+
+	<TextView
+		android:id="@+id/textView_subhead_teamMembers"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingLeft="72dp"
+		android:paddingStart="72dp"
+		android:paddingTop="16dp"
+		android:paddingRight="16dp"
+		android:paddingEnd="16dp"
+		android:paddingBottom="16dp"
+		android:text="@string/subhead_teamMembers"
+		android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/recyclerView_teamMembers"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scrollbars="vertical"/>
+
+
+</LinearLayout>

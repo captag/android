@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/slidingUpPanelLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:gravity="bottom"
+	app:umanoParallaxOffset="200dp"
+	app:umanoPanelHeight="72dp"
+	app:umanoShadowHeight="4dp">
+
+	<FrameLayout
+		android:id="@+id/frameLayout_container_mapFragment"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+
+	<FrameLayout
+		android:id="@+id/frameLayout_container_scannerFragment"
+		android:layout_width="match_parent"
+		android:layout_height="400dp"/>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

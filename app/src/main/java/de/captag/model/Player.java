@@ -53,6 +53,17 @@ public class Player extends ParseObject {
    }
 
 
+   public boolean isUser (ParseUser user) {
+
+      //noinspection SimplifiableIfStatement
+      if (user == null) {
+         return false;
+      }
+
+      return getUser().getObjectId().equals(user.getObjectId());
+   }
+
+
    public ParseUser getUser () {
       return getPointer(POINTER_USER);
    }

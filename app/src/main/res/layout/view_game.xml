@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.captag.app.gamebrowser.GameView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/gameView"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:padding="16dp"
+	android:orientation="horizontal"
+	android:background="?attr/selectableItemBackground">
+
+	<de.hdodenhof.circleimageview.CircleImageView
+		android:id="@+id/circleImageView_icon"
+		android:layout_width="40dp"
+		android:layout_height="40dp"
+		android:layout_gravity="center_vertical"
+		android:layout_marginRight="16dp"
+		android:layout_marginEnd="16dp"
+		android:src="@drawable/ic_game_icon_placeholder_40dp"
+		app:civ_border_width="0dp"
+		app:civ_fill_color="@color/colorAccent"/>
+
+	<LinearLayout
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:layout_gravity="center_vertical"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/textView_status"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textAppearance="@style/Theme.Captag.TextAppearance.ListItem.Secondary"/>
+		<TextView
+			android:id="@+id/textView_name"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textAppearance="@style/Theme.Captag.TextAppearance.ListItem.Primary"/>
+		<TextView
+			android:id="@+id/textView_startDate"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textAppearance="@style/Theme.Captag.TextAppearance.ListItem.Secondary"/>
+
+	</LinearLayout>
+
+</de.captag.app.gamebrowser.GameView>

@@ -12,10 +12,6 @@ import com.parse.ParseUser;
 
 import de.captag.R;
 
-import static de.captag.util.SnackbarFactory.createSnackbar;
-import static de.captag.util.SnackbarFactory.createErrorSnackbar;
-import static de.captag.util.SnackbarFactory.createSuccessSnackbar;
-
 
 /**
  * TODO Write documentation
@@ -44,10 +40,6 @@ public class BaseActivity extends Activity {
     * @param duration The duration the message should be shown.
     */
    public void showSnackbar (String message, int duration) {
-
-      View container = getSnackbarContainer();
-      Snackbar snackbar = createSnackbar(container, message, duration);
-      snackbar.show();
    }
 
 
@@ -58,10 +50,6 @@ public class BaseActivity extends Activity {
     * @param callback The snackbar callback to be notified when the snackbar is shown or dismissed.
     */
    public void showSnackbar (String message, int duration, Snackbar.Callback callback) {
-
-      View container = getSnackbarContainer();
-      Snackbar snackbar = createSnackbar(container, message, duration, callback);
-      snackbar.show();
    }
 
 
@@ -71,10 +59,6 @@ public class BaseActivity extends Activity {
     * @param duration The duration the message should be shown.
     */
    public void showErrorSnackbar (String message, int duration) {
-
-      View container = getSnackbarContainer();
-      Snackbar snackbar = createErrorSnackbar(container, message, duration);
-      snackbar.show();
    }
 
 
@@ -85,10 +69,6 @@ public class BaseActivity extends Activity {
     * @param callback The snackbar callback to be notified when the snackbar is shown or dismissed.
     */
    public void showErrorSnackbar (String message, int duration, Snackbar.Callback callback) {
-
-      View container = getSnackbarContainer();
-      Snackbar snackbar = createErrorSnackbar(container, message, duration, callback);
-      snackbar.show();
    }
 
 
@@ -98,10 +78,6 @@ public class BaseActivity extends Activity {
     * @param duration The duration the message should be shown.
     */
    public void showSuccessSnackbar (String message, int duration) {
-
-      View container = getSnackbarContainer();
-      Snackbar snackbar = createSuccessSnackbar(container, message, duration);
-      snackbar.show();
    }
 
 
@@ -112,10 +88,6 @@ public class BaseActivity extends Activity {
     * @param callback The snackbar callback to be notified when the snackbar is shown or dismissed.
     */
    public void showSuccessSnackbar (String message, int duration, Snackbar.Callback callback) {
-
-      View container = getSnackbarContainer();
-      Snackbar snackbar = createSuccessSnackbar(container, message, duration, callback);
-      snackbar.show();
    }
 
 

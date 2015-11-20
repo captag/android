@@ -66,7 +66,7 @@ public class Tag extends ParseObject {
    /**
     * Returns the label of this tag.
     */
-   public String getLable () {
+   public String getLabel () {
       return getString(ATTRIBUTE_LABEL);
    }
 

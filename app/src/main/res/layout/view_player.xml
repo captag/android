@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.captag.app.lobby.PlayerView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/playerView"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:padding="16dp"
+	android:orientation="horizontal">
+
+	<de.hdodenhof.circleimageview.CircleImageView
+		android:id="@+id/circleImageView_avatar"
+		android:layout_width="40dp"
+		android:layout_height="40dp"
+		android:layout_gravity="center_vertical"
+		android:layout_marginRight="16dp"
+		android:layout_marginEnd="16dp"
+		android:src="@drawable/ic_game_icon_placeholder_40dp"
+		app:civ_border_width="0dp"
+		app:civ_fill_color="@color/colorAccent"/>
+
+	<TextView
+		android:id="@+id/textView_username"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical"
+		android:textAppearance="@style/Theme.Captag.TextAppearance.ListItem.Primary"/>
+
+</de.captag.app.lobby.PlayerView>
